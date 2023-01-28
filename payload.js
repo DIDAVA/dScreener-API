@@ -25,9 +25,9 @@ const payload = {
       //{left: "24h_close_change|5", operation: "eless", right: 0},
       {left: "24h_vol_to_market_cap", operation: "egreater", right: 0},
       {left: "24h_vol_change_cmc", operation: "egreater", right: 0},
-      {left: "RSI|1W", operation: "not_in_range", right: [30,70]},
-      {left: "RSI|1W", operation: "greater", right: 0},
-      {left: "RSI|1W", operation: "less", right: 100},
+      {left: "RSI|240", operation: "not_in_range", right: [30,70]},
+      {left: "RSI|240", operation: "greater", right: 0},
+      {left: "RSI|240", operation: "less", right: 100},
       {left: "Volatility.D", operation: "egreater", right: 0}
   ],
   sort: {
