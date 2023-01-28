@@ -25,17 +25,17 @@ const payload = {
       //{left: "24h_close_change|5", operation: "eless", right: 0},
       {left: "24h_vol_to_market_cap", operation: "egreater", right: 0},
       {left: "24h_vol_change_cmc", operation: "egreater", right: 0},
-      {left: "RSI|60", operation: "not_in_range", right: [30,70]},
-      {left: "RSI|60", operation: "greater", right: 0},
-      {left: "RSI|60", operation: "less", right: 100},
+      {left: "RSI", operation: "not_in_range", right: [31,69]},
+      {left: "RSI", operation: "greater", right: 0},
+      {left: "RSI", operation: "less", right: 100},
       {left: "Volatility.D", operation: "egreater", right: 0}
   ],
   sort: {
-    sortBy: "RSI|60",
+    sortBy: "RSI",
     sortOrder: "asc"
   },
   ignore_unknown_fields: false,
-  range: [0, 100],
+  range: [0, 1000],
   markets: ["coin"]
 }
 
