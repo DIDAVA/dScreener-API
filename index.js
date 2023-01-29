@@ -1,3 +1,4 @@
+const fs = require('fs')
 const axios = require('axios')
 const tv = axios.create()
 const {Server} = require('socket.io')
@@ -9,11 +10,14 @@ const io = new Server({
   }
 })
 
+const getPayload = () => {
+  return JSON.parse(fs.readFileSync('./payload.json'))
+}
+
 const valid = require('./filter')
-const payload = require('./payload')
 let cache = {}
 const fetch = () => {
-  tv.post('https://scanner.tradingview.com/coin/scan', payload)
+  tv.post('https://scanner.tradingview.com/coin/scan', getPayload())
   .then(resp => {
     resp.data.data = resp.data.data.filter(i => valid.includes(i.d[0]))
     cache = resp.data
@@ -27,7 +31,7 @@ const fetch = () => {
 const main = () => {
   io.on('connection', socket => {
     socket.emit('welcome')
-    socket.emit('payload', payload)
+    socket.emit('payload', getPayload())
     socket.emit('data', cache)
   })
   io.listen(port)
