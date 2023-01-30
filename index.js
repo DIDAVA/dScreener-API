@@ -22,8 +22,8 @@ const process = data => {
       const avg = sum / fil.length
       const min = Math.min(...rsi)
       const max = Math.max(...rsi)
-      if (min >= 75) list.push({sym: symbol, side: 'sell', close: item.d[3], avg, rsi})
-      if (max <= 25) list.push({sym: symbol, side: 'buy', close: item.d[3], avg, rsi})
+      if (min >= 80) list.push({sym: symbol, side: 'sell', close: item.d[3], avg, rsi})
+      if (max <= 20) list.push({sym: symbol, side: 'buy', close: item.d[3], avg, rsi})
     }
   })
   if (list.length) {
