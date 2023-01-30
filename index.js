@@ -14,12 +14,10 @@ const getPayload = () => {
   return JSON.parse(fs.readFileSync('./payload.json'))
 }
 
-const valid = require('./filter')
 let cache = {}
 const fetch = () => {
   tv.post('https://scanner.tradingview.com/coin/scan', getPayload())
   .then(resp => {
-    resp.data.data = resp.data.data.filter(i => valid.includes(i.d[0]))
     cache = resp.data
     io.emit('data', resp.data)
   })

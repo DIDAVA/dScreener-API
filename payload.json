@@ -14,18 +14,19 @@
     "Volatility.D",
     "Volatility.W",
     "Volatility.M",
+    "RSI|1",
+    "RSI|5",
     "RSI|15",
     "RSI|30",
     "RSI|60",
     "RSI|240",
     "RSI",
     "RSI|1W",
-    "RSI|1M",
-    "RSI|5",
-    "RSI|1"
+    "RSI|1M"
   ],
   "filter": [
-    
+    {"left": "RSI|60", "operation": "greater", "right": 0},
+    {"left": "RSI|60", "operation": "less", "right": 100}
   ],
   "sort": {
     "sortBy": "market_cap_calc",
