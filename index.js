@@ -10,6 +10,33 @@ const io = new Server({
   }
 })
 
+const filter = require('./filter')
+const process = data => {
+  const list = []
+  data.forEach(item => {
+    const symbol = item.d[0]
+    if (filter.swap.includes(symbol)) {
+      const rsi = item.d.slice(14, 21)
+      const fil = rsi.filter(i => typeof i == 'number')
+      const sum = fil.reduce((a,b) => a + b, 0)
+      const avg = sum / fil.length
+      const min = Math.min(...rsi)
+      const max = Math.max(...rsi)
+      if (min >= 75) list.push({sym: symbol, side: 'sell', close: item.d[3], avg, rsi})
+      if (max <= 25) list.push({sym: symbol, side: 'buy', close: item.d[3], avg, rsi})
+    }
+  })
+  if (list.length) {
+    const file = `./opportunities.json`
+    let oppotunities = {}
+    if (fs.existsSync(file)) oppotunities = JSON.parse(fs.readFileSync(file))
+    const date = new Date().toLocaleString()
+    const ts = Date.now()
+    oppotunities[ts] = {date, list}
+    fs.writeFileSync(file, JSON.stringify(oppotunities, null, 2))
+  }
+}
+
 const getPayload = () => {
   return JSON.parse(fs.readFileSync('./payload.json'))
 }
@@ -20,6 +47,7 @@ const fetch = () => {
   .then(resp => {
     cache = resp.data
     io.emit('data', resp.data)
+    process(resp.data.data)
   })
   .catch(err => {
     console.error(err.message)
