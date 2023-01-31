@@ -5,7 +5,7 @@ const {Server} = require('socket.io')
 const port = 8000
 const io = new Server({
   cors: {
-    origin: "http://localhost:8080 https://screener.didava.ir",
+    origins: "http://localhost:8080 https://screener.didava.ir",
     methods: ["GET", "POST"]
   }
 })
