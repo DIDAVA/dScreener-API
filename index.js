@@ -5,7 +5,7 @@ const {Server} = require('socket.io')
 const port = 8000
 const io = new Server({
   cors: {
-    origin: "http://localhost:8080",
+    origin: "http://localhost:8080 https://screener.didava.ir",
     methods: ["GET", "POST"]
   }
 })
@@ -16,14 +16,14 @@ const process = data => {
   data.forEach(item => {
     const symbol = item.d[0]
     if (filter.swap.includes(symbol)) {
-      const rsi = item.d.slice(14, 21)
+      const rsi = item.d.slice(14, 20)
       const fil = rsi.filter(i => typeof i == 'number')
       const sum = fil.reduce((a,b) => a + b, 0)
       const avg = sum / fil.length
       const min = Math.min(...rsi)
       const max = Math.max(...rsi)
-      if (min >= 80) list.push({sym: symbol, side: 'sell', close: item.d[3], avg, rsi})
-      if (max <= 20) list.push({sym: symbol, side: 'buy', close: item.d[3], avg, rsi})
+      if (min >= 75) list.push({sym: symbol, side: 'sell', close: item.d[3], avg, rsi})
+      if (max <= 25) list.push({sym: symbol, side: 'buy', close: item.d[3], avg, rsi})
     }
   })
   if (list.length) {
