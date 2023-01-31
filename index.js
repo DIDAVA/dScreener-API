@@ -16,7 +16,7 @@ const process = data => {
   data.forEach(item => {
     const symbol = item.d[0]
     if (filter.swap.includes(symbol)) {
-      const rsi = item.d.slice(14, 20)
+      const rsi = item.d.slice(13, 18)
       const fil = rsi.filter(i => typeof i == 'number')
       const sum = fil.reduce((a,b) => a + b, 0)
       const avg = sum / fil.length
